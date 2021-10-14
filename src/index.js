@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import './App.css';
 
 /* ######### Components ######### */
-import Die from './Die';
+import RollDice from './RollDice';
 /* ############################## */
 
 ReactDOM.render(
     <div className="App">
-      <Die face="five"/>
+      <RollDice />
     </div>
   ,document.getElementById('root')
 );

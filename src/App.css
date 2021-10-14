@@ -7,6 +7,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.flex-break {
+  flex-basis: 100%;
+  width: 0;
+}
+
+i.fas {
+  font-size: clamp(72px, 15vw, 20vw);
+  padding: 30px;
+  color: rgb(71, 71, 190);
+}
+
+.RollDice {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc(30px + 5vw);
+}
+
+.RollDice button {
+  break-before: always;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
