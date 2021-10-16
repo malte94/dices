@@ -8,13 +8,10 @@ class RollDice extends React.Component {
   state = {
     dice1: 'one',
     dice2: 'two',
-  }
-
-  constructor(props) {
-    super(props);
-    this.attempts = 0;
-    this.victory = "";
-    this.btnDisabled = false;
+    isRolling: false,
+    btnDisabled: false,
+    victory: '',
+    attempts: 0
   }
 
   static defaultProps = {
@@ -22,37 +19,43 @@ class RollDice extends React.Component {
   }
 
   roll = () => {
+    this.setState({btnDisabled: true});
+
     const Diced1 = this.props.sides[Math.floor(Math.random() * this.props.sides.length)];
     const Diced2 = this.props.sides[Math.floor(Math.random() * this.props.sides.length)];
-    this.setState({
-        dice1: Diced1,
-        dice2: Diced2,
+
+    this.setState({dice1: Diced1, dice2: Diced2, isRolling: true}, () => {
+      if (this.state.dice1 === "six" && this.state.dice2 === "six") {
+        this.setState({victory: <p style={{color: 'green', fontWeight: '600'}}>You win!</p>});
+        this.setState({btnDisabled: true});
+      } else {
+        setTimeout(() => {
+          this.setState({isRolling: false});
+          this.setState({btnDisabled: false});
+        }, 500)
+      }
     })
-
-    if (this.state.dice1 === "six" && this.state.dice2 === "six") {
-      this.victory = <p style={{color: 'green', fontWeight: '600'}}>You win!</p>;
-      this.btnDisabled = true;
-    }
-
   }
 
   incAttempts = () => {
-    this.attempts = this.attempts + 1;
+    this.setState({attempts: this.state.attempts + 1});
   }
 
   render() {
       return (
         <div className="RollDice">
           <div className="flex">
-            <Dice face={this.state.dice1} />
-            <Dice face={this.state.dice2} />
+            <Dice prpFace={this.state.dice1} prpRolling={this.state.isRolling} />
+            <Dice prpFace={this.state.dice2} prpRolling={this.state.isRolling} />
             <span className="flex-break" />
-            <button disabled={this.btnDisabled} onClick={() => { this.roll(); this.incAttempts(); }}>Roll Dice</button>
+            <button disabled={this.state.btnDisabled} onClick={() => { this.roll(); this.incAttempts(); }}>
+              {this.state.isRolling ? 'Rolling ...' : "Roll dice!"}
+            </button>
             <span className="flex-break" />
             <br />
-            Attempts: {this.attempts}
+            Attempt: {this.state.attempts}
             <span className="flex-break" />
-            {this.victory}
+            {this.state.victory}
           </div>
         </div>
     )
