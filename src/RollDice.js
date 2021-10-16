@@ -18,7 +18,7 @@ class RollDice extends React.Component {
       sides: ["one", "two", "three", "four", "five", "six"]
   }
 
-  roll = () => {
+  asyncroll = async() => {
     this.setState({btnDisabled: true});
 
     const Diced1 = this.props.sides[Math.floor(Math.random() * this.props.sides.length)];
@@ -39,7 +39,7 @@ class RollDice extends React.Component {
 
   /* Instead of a callback for setState to promise the result, an Async Function might be working as well
 
-    async tripleKill() {
+    roll = async() => {
       await this.setState({score: this.state.score + 1});
       await this.setState({score: this.state.score + 1});
       await this.setState({score: this.state.score + 1});
